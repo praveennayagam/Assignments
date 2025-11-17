@@ -1,0 +1,262 @@
+create database Praveen1;
+use Praveen1;
+
+
+-- 1NF Table
+CREATE TABLE StudentPhones (
+    StudentID INT,
+    Name VARCHAR(50),
+    PhoneNumber VARCHAR(20)
+);
+
+INSERT INTO StudentPhones (StudentID, Name, PhoneNumber) VALUES
+(101, 'Ravi', '98765'),
+(101, 'Ravi', '87654'),
+(102, 'Anita', '99900'),
+(103, 'John', '88888'),
+(103, 'John', '77777'),
+(103, 'John', '66666');
+select*from StudentPhones;
+
+CREATE TABLE OrderItems (
+    OrderID VARCHAR(10),
+    Customer VARCHAR(50),
+    Item VARCHAR(50)
+);
+
+INSERT INTO OrderItems VALUES
+('O1', 'Raj', 'Pen'),
+('O1', 'Raj', 'Pencil'),
+('O2', 'Sam', 'Notebook'),
+('O3', 'Raj', 'Eraser'),
+('O3', 'Raj', 'Marker'),
+('O3', 'Raj', 'Pen');
+select*from OrderItems;
+
+
+CREATE TABLE EmployeeSkills (
+    EmpID INT,
+    EmpName VARCHAR(50),
+    Skill VARCHAR(50)
+);
+
+INSERT INTO EmployeeSkills VALUES
+(1, 'Ramesh', 'Java'),
+(1, 'Ramesh', 'Python'),
+(2, 'Anita', 'Excel'),
+(3, 'John', 'C++'),
+(3, 'John', 'Java'),
+(3, 'John', 'HTML');
+select*from EmployeeSkills;
+
+
+
+CREATE TABLE Customers1NF (
+    CustID INT,
+    Name VARCHAR(50),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    Country VARCHAR(50)
+);
+
+INSERT INTO Customers1NF VALUES
+(1, 'Meera', 'Hyderabad', 'Telangana', 'India'),
+(2, 'Ajay', 'Pune', 'Maharashtra', 'India');
+select*from Customers1NF;
+
+
+-- 2NF Table
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    StudentName VARCHAR(50)
+);
+
+CREATE TABLE Courses (
+    CourseID VARCHAR(10) PRIMARY KEY,
+    CourseName VARCHAR(50),
+    Faculty VARCHAR(50)
+);
+
+CREATE TABLE StudentCourses (
+    StudentID INT,
+    CourseID VARCHAR(10),
+    Marks INT,
+    PRIMARY KEY (StudentID, CourseID)
+);
+
+INSERT INTO Students VALUES
+(1, 'Ramesh'), (2, 'Anita');
+
+INSERT INTO Courses VALUES
+('C1', 'Java', 'Amit'),
+('C2', 'Python', 'Seema');
+
+INSERT INTO StudentCourses VALUES
+(1, 'C1', 90),
+(1, 'C2', 85),
+(2, 'C1', 78);
+select * from Students;
+select * from Courses;
+select * from StudentCourses;
+
+
+CREATE TABLE Orders (
+    OrderID VARCHAR(10) PRIMARY KEY,
+    CustomerName VARCHAR(50)
+);
+
+CREATE TABLE Products (
+    ProductID VARCHAR(10) PRIMARY KEY,
+    ProductName VARCHAR(50)
+);
+
+CREATE TABLE OrderDetails (
+    OrderID VARCHAR(10),
+    ProductID VARCHAR(10),
+    Quantity INT,
+    PRIMARY KEY (OrderID, ProductID)
+);
+
+INSERT INTO Orders VALUES
+('O1', 'Raj'),
+('O2', 'Meena');
+
+INSERT INTO Products VALUES
+('P1', 'Pen'),
+('P2', 'Pencil');
+
+INSERT INTO OrderDetails VALUES
+('O1', 'P1', 2),
+('O1', 'P2', 1),
+('O2', 'P1', 3);
+select * from Orders;
+select * from Products;
+select * from OrderDetails;
+
+
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50)
+);
+
+CREATE TABLE Projects (
+    ProjectID VARCHAR(10) PRIMARY KEY,
+    ProjectName VARCHAR(50)
+);
+
+CREATE TABLE EmpProjects (
+    EmpID INT,
+    ProjectID VARCHAR(10),
+    HoursWorked INT,
+    PRIMARY KEY (EmpID, ProjectID)
+);
+
+INSERT INTO Employees VALUES
+(1, 'Ravi'), (2, 'Anita');
+
+INSERT INTO Projects VALUES
+('P1', 'WebApp'),
+('P2', 'MobileApp');
+
+INSERT INTO EmpProjects VALUES
+(1, 'P1', 20),
+(1, 'P2', 30),
+(2, 'P1', 25);
+select * from Employees;
+select * from Projects;
+select * from EmpProjects;
+
+
+CREATE TABLE Drivers (
+    DriverID VARCHAR(10) PRIMARY KEY,
+    DriverName VARCHAR(50)
+);
+
+CREATE TABLE Routes (
+    RouteID VARCHAR(10) PRIMARY KEY,
+    RouteName VARCHAR(50),
+    Distance VARCHAR(20)
+);
+
+CREATE TABLE DriverRoutes (
+    DriverID VARCHAR(10),
+    RouteID VARCHAR(10),
+    PRIMARY KEY (DriverID, RouteID)
+);
+
+INSERT INTO Drivers VALUES
+('D1', 'Amit'),
+('D2', 'Sunil');
+
+INSERT INTO Routes VALUES
+('R1', 'Airport Route', '40 km'),
+('R2', 'City Route', '20 km');
+
+INSERT INTO DriverRoutes VALUES
+('D1', 'R1'),
+('D1', 'R2'),
+('D2', 'R1');
+select * from Drivers;
+select * from Routes;
+select * from DriverRoutes;
+
+
+
+
+
+CREATE TABLE OrderItems1NF (
+    OrderID VARCHAR(10),
+    CustomerName VARCHAR(50),
+    City VARCHAR(50),
+    ProductID VARCHAR(10),
+    ProductName VARCHAR(50),
+    Price INT,
+    Quantity INT
+);
+
+INSERT INTO OrderItems1NF VALUES
+('O1', 'Ravi', 'Mumbai', 'P1', 'Pen', 10, 2),
+('O1', 'Ravi', 'Mumbai', 'P1', 'Pen', 10, 3),
+('O2', 'Meena', 'Delhi', 'P2', 'Book', 100, 1),
+('O2', 'Meena', 'Delhi', 'P3', 'Bag', 500, 1),
+('O2', 'Meena', 'Delhi', 'P3', 'Bag', 500, 2);
+
+select*from OrderItems1NF;
+
+CREATE TABLE Orders2NF (
+    OrderID VARCHAR(10) PRIMARY KEY,
+    CustomerName VARCHAR(50),
+    City VARCHAR(50)
+);
+
+CREATE TABLE Products2NF (
+    ProductID VARCHAR(10) PRIMARY KEY,
+    ProductName VARCHAR(50),
+    Price INT
+);
+
+CREATE TABLE OrderDetails2NF (
+    OrderID VARCHAR(10),
+    ProductID VARCHAR(10),
+    Quantity INT
+);
+
+INSERT INTO Orders2NF VALUES
+('O1', 'Ravi', 'Mumbai'),
+('O2', 'Meena', 'Delhi');
+
+INSERT INTO Products2NF VALUES
+('P1', 'Pen', 10),
+('P2', 'Book', 100),
+('P3', 'Bag', 500);
+
+INSERT INTO OrderDetails2NF VALUES
+('O1', 'P1', 2),
+('O1', 'P1', 3),
+('O2', 'P2', 1),
+('O2', 'P3', 1),
+('O2', 'P3', 2);
+select*from Orders2NF;
+select*from Products2NF;
+select*from OrderDetails2NF;
