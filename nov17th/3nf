@@ -1,0 +1,242 @@
+-- 3nf
+-- 1.
+CREATE TABLE HOD (
+    hod_id VARCHAR(10) PRIMARY KEY,
+    hod_name VARCHAR(50)
+);
+
+INSERT INTO HOD VALUES
+('H1', 'Dr. Kumar'),
+('H2', 'Dr. Meena'),
+('H3', 'Dr. Raj');
+select* from HOD;
+
+CREATE TABLE DEPARTMENT (
+    dept_id VARCHAR(10) PRIMARY KEY,
+    dept_name VARCHAR(50),
+    hod_id VARCHAR(10),
+    FOREIGN KEY (hod_id) REFERENCES HOD(hod_id)
+);
+
+INSERT INTO DEPARTMENT VALUES
+('D1', 'Computer Science', 'H1'),
+('D2', 'Mechanical', 'H2'),
+('D3', 'Electrical', 'H3');
+select* from DEPARTMENT;
+
+CREATE TABLE STUDENT (
+    stud_id VARCHAR(10) PRIMARY KEY,
+    stud_name VARCHAR(50),
+    dept_id VARCHAR(10),
+    FOREIGN KEY (dept_id) REFERENCES DEPARTMENT(dept_id)
+);
+
+INSERT INTO STUDENT VALUES
+('S1', 'Amit', 'D1'),
+('S2', 'Sunil', 'D2'),
+('S3', 'Priya', 'D1'),
+('S4', 'Rohan', 'D3');
+select* from STUDENT;
+
+
+-- 2.
+
+
+CREATE TABLE EMP (
+    emp_id VARCHAR(10) PRIMARY KEY,
+    emp_name VARCHAR(50)
+);
+
+
+CREATE TABLE CLIENT (
+    client_id VARCHAR(10) PRIMARY KEY,
+    client_name VARCHAR(50)
+);
+
+
+CREATE TABLE PROJECT (
+    proj_id VARCHAR(10) PRIMARY KEY,
+    proj_name VARCHAR(50),
+    client_id VARCHAR(10),
+    FOREIGN KEY (client_id) REFERENCES CLIENT(client_id)
+);
+
+
+CREATE TABLE EMP_PROJECT (
+    emp_id VARCHAR(10),
+    proj_id VARCHAR(10),
+    PRIMARY KEY (emp_id, proj_id),
+    FOREIGN KEY (emp_id) REFERENCES EMP(emp_id),
+    FOREIGN KEY (proj_id) REFERENCES PROJECT(proj_id)
+);
+
+
+INSERT INTO CLIENT VALUES
+('C1', 'Tata Consultancy'),
+('C2', 'Infosys Ltd'),
+('C3', 'HCL Technologies');
+select* from CLIENT;
+
+
+INSERT INTO PROJECT VALUES
+('P1', 'Banking App', 'C1'),
+('P2', 'HR Portal', 'C2'),
+('P3', 'E-Commerce Site', 'C3'),
+('P4', 'Inventory System', 'C1');
+select* from PROJECT;
+
+INSERT INTO EMP VALUES
+('E1', 'Amit'),
+('E2', 'Suresh'),
+('E3', 'Priya'),
+('E4', 'John'),
+('E5', 'Meena');
+select * from EMP;
+
+
+INSERT INTO EMP_PROJECT VALUES
+('E1', 'P1'),
+('E2', 'P2'),
+('E3', 'P3'),
+('E1', 'P4'),
+('E5', 'P1');
+select * from EMP_PROJECT;
+
+-- 3.
+
+
+CREATE TABLE AUTHOR (
+    author_id VARCHAR(10) PRIMARY KEY,
+    author_name VARCHAR(100)
+);
+
+
+CREATE TABLE PUBLISHER (
+    publisher_id VARCHAR(10) PRIMARY KEY,
+    publisher_name VARCHAR(100)
+);
+
+
+CREATE TABLE BOOK (
+    book_id VARCHAR(10) PRIMARY KEY,
+    book_title VARCHAR(100),
+    author_id VARCHAR(10),
+    publisher_id VARCHAR(10),
+    FOREIGN KEY (author_id) REFERENCES AUTHOR(author_id),
+    FOREIGN KEY (publisher_id) REFERENCES PUBLISHER(publisher_id)
+);
+
+INSERT INTO AUTHOR VALUES
+('A1', 'J. K. Rowling'),
+('A2', 'George Orwell'),
+('A3', 'Haruki Murakami'),
+('A4', 'Chetan Bhagat'),
+('A5', 'Agatha Christie');
+select* from AUTHOR;
+
+INSERT INTO PUBLISHER VALUES
+('P1', 'Bloomsbury Publishing'),
+('P2', 'Penguin Books'),
+('P3', 'HarperCollins'),
+('P4', 'Hachette India'),
+('P5', 'Vintage Publishing');
+select* from PUBLISHER;
+
+INSERT INTO BOOK VALUES
+('B1', 'Harry Potter', 'A1', 'P1'),
+('B2', '1984', 'A2', 'P2'),
+('B3', 'Kafka on the Shore', 'A3', 'P5'),
+('B4', '2 States', 'A4', 'P4'),
+('B5', 'Murder on the Orient Express', 'A5', 'P3');
+select* from BOOK;
+
+-- 4
+
+CREATE TABLE CATEGORY (
+    category VARCHAR(50) PRIMARY KEY,
+    category_discount DECIMAL(5,2)
+);
+
+
+CREATE TABLE PRODUCT (
+    product_id VARCHAR(10) PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    FOREIGN KEY (category) REFERENCES CATEGORY(category)
+);
+
+
+CREATE TABLE SALES (
+    sale_id VARCHAR(10) PRIMARY KEY,
+    product_id VARCHAR(10),
+    FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id)
+);
+
+INSERT INTO CATEGORY VALUES
+('Electronics', 10.00),
+('Clothing', 5.00),
+('Books', 15.00),
+('Groceries', 2.00),
+('Furniture', 12.00);
+
+INSERT INTO PRODUCT VALUES
+('P1', 'Smartphone', 'Electronics'),
+('P2', 'T-Shirt', 'Clothing'),
+('P3', 'Novel Book', 'Books'),
+('P4', 'Rice Bag', 'Groceries'),
+('P5', 'Office Chair', 'Furniture');
+
+INSERT INTO SALES VALUES
+('S1', 'P1'),
+('S2', 'P2'),
+('S3', 'P3'),
+('S4', 'P4'),
+('S5', 'P5');
+
+-- 5.
+DROP TABLE IF EXISTS ENROLL;
+DROP TABLE IF EXISTS COURSE;
+DROP TABLE IF EXISTS STUDENT;
+
+CREATE TABLE STUDENT (
+    roll_no VARCHAR(10) PRIMARY KEY,
+    stud_name VARCHAR(100)
+);
+
+CREATE TABLE COURSE (
+    course_id VARCHAR(10) PRIMARY KEY,
+    course_name VARCHAR(100),
+    credits INT
+);
+
+CREATE TABLE ENROLL (
+    roll_no VARCHAR(10),
+    course_id VARCHAR(10),
+    PRIMARY KEY (roll_no, course_id),
+    FOREIGN KEY (roll_no) REFERENCES STUDENT(roll_no),
+    FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
+);
+
+INSERT INTO STUDENT VALUES
+('R1', 'Amit Kumar'),
+('R2', 'Sneha Reddy'),
+('R3', 'John David'),
+('R4', 'Meera Singh'),
+('R5', 'Karan Patel');
+
+INSERT INTO COURSE VALUES
+('C101', 'Database Systems', 4),
+('C102', 'Operating Systems', 3),
+('C103', 'Computer Networks', 4),
+('C104', 'Java Programming', 3),
+('C105', 'Data Structures', 4);
+
+INSERT INTO ENROLL VALUES
+('R1', 'C101'),
+('R2', 'C104'),
+('R3', 'C105'),
+('R1', 'C103'),
+('R5', 'C102');
+
+
+
