@@ -1,0 +1,77 @@
+-- 18th November
+
+--DML (INSERT, UPDATE, DELETE)
+--1. Insert a new customer from India into the customers table.
+insert into customers values(500,'Parveen','Banu','Parveen','1234509876','Kuniyamuthur','Coimbatore','Coimbatore','Tamilnadu','654321','India',1056,50.50);
+
+
+-- 2. Update the creditLimit of all customers from Germany by 10%.
+set SQL_SAFE_UPDATES=0;
+update customers set creditLimit=creditLimit+(creditLimit*10/100) where country='Germany';
+
+
+-- 3. Delete all orders placed before '2005-01-01'.
+alter table orderdetails drop foreign key orderdetails_ibfk_1;
+alter table orderdetails add constraint orderdetails_ibfk_1 foreign key(orderNumber) references orders(orderNumber) on delete cascade;
+delete  from orders where orderdate<'2005-01-01';
+
+
+--4. Add a new product to the products table with a productLine of 'Classic Cars'.
+insert  into products(productCode,productName,productLine,productScale,productVendor,productDescription,quantityInStock,buyPrice,MSRP) values 
+('S20_1800','1969 Harley Davidson Ultimate Chopper','Classic Cars','1:10','Min Lin Diecast','Attention car enthusiasts: Make your wildest car ownership dreams come true. 
+Whether you are looking for classic muscle cars, dream sports cars or movie-inspired miniatures, you will find great choices in this category. 
+These replicas feature superb attention to detail and craftsmanship and offer features such as working steering system, opening forward compartment, opening rear trunk with removable spare wheel, 4-wheel independent spring suspension, and so on. 
+The models range in size from 1:10 to 1:24 scale and include numerous limited edition and several out-of-production vehicles. All models include a certificate of authenticity from their manufacturers and come fully assembled and ready for display in the home or office.',
+7933,'48.81','95.70');
+
+
+-- 5. Insert a new payment for an existing customer using a check number.
+insert into payments(customerNumber,checkNumber,paymentdate,amount) values(500,'PC123456','2003-10-02',20000.80);
+
+
+-- 6. Update the phone number of the office in London.
+update offices set phone='+38 12 5678 1234' where city='London';
+
+
+-- 7. Delete a product that has never been ordered.
+delete from products where productCode not in (select productcode from orderdetails);
+
+
+-- 8. Insert a new employee under a manager from office code '1'.
+insert  into employees(employeeNumber,lastName,firstName,extension,email,officeCode,reportsTo,jobTitle) values 
+(1038,'Parveen','Banu','x5800','dmurphy@classicmodelcars.com','1',NULL,'President');
+
+
+ --WHERE Clause
+ --9. Retrieve all customers who have a credit limit greater than 50,000.
+select * from customers where creditLimit>50000;
+
+
+-- 10. List employees working in the 'San Francisco' office.
+select * from employees join offices on employees.officecode=offices.officecode where employees.officecode=
+(select officecode from offices where city='San Francisco');
+
+
+-- 11. Get all orders with status 'Shipped' and order date in 2004.
+select * from orders where status='Shipped' and orderdate >='2004-01-01' and orderdate<='2004-12-30';
+
+
+--12. Find products whose buy price is between 50 and 100.
+select * from products where buyprice>50 and buyprice<100;
+
+
+--13. Find all employees who report to employee number 1143.
+select * from employees where reportsTo=1143;
+
+
+-- 14. Retrieve customers from cities starting with 'S'.
+select * from customers where city like 'S%';
+
+
+-- 15. List orders with comments containing the word "urgent".
+select * from orders where comments like '%urgent%';
+
+
+-- 16. Show all payments made in the year 2003.
+select * from payments where paymentdate>='2003-01-01' and paymentdate<='2003-12-30';
+
