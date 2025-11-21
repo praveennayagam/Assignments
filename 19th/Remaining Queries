@@ -1,0 +1,191 @@
+-- Nov19th
+
+-- GROUP BY and HAVING
+
+-- 17. List total payments made by each customer.
+select customernumber,count(*) paymentCount from payments group by customernumber;
+
+
+--18. Show customers who have made more than 3 payments.
+select customernumber,count(*) paymentCount from payments group by customernumber having count(*)>3 ;
+
+
+--19. Count the number of employees in each office.
+select officecode,count(*) EmployeeCount from employees group by officecode;
+
+
+--20. List product lines with an average product price greater than 100.
+select productline,avg(buyprice) average from products group by productline  having avg(buyprice)>50;
+
+
+--21. List customers with total order amount greater than 50,000.
+select customernumber,sum(amount) total_order_amount from payments group by customernumber having sum(amount)>50000;
+
+
+--22. Show total quantity ordered for each product code.
+select productcode,sum(quantityordered) total_quantity from orderdetails group by productcode ;
+
+
+--23. Display number of orders for each order status.
+select status,count(ordernumber) no_of_orders from orders group by status;
+
+
+--24. List employees who manage more than 2 other employees.
+select reportsto from employees group by reportsto having count(employeenumber)>2;
+
+
+-- ORDER BY CLAUSE
+
+--25. Display all customers in France ordered by credit limit in descending order.
+select * from customers where country='France' order by creditlimit desc;
+
+
+--26. List products ordered by quantity in stock in ascending order.
+select * from products order by quantityinstock ;
+
+
+--27. Show all payments sorted by payment date (most recent first).
+select * from payments order by paymentdate;
+
+
+--28. List employees ordered by job title and then by last name.
+select * from employees order by jobtitle,lastname;
+
+
+--29. List the top 5 customers by credit limit.
+select * from customers order by creditlimit desc limit 5;
+
+
+--30. Show product lines sorted alphabetically.
+select * from productlines order by productline;
+
+
+--31. List the earliest 10 orders.
+select * from orders order by orderdate limit 10;
+
+
+--32. Display products sorted by product line and then by price.
+select * from products order by productline,buyprice;
+
+
+-- JOINS (INNER,RIGHT,LEFT,SELF)
+
+--33. List all orders along with customer names (INNER JOIN).
+select * from orders inner join customers on orders.customernumber=customers.customernumber; -- INNER JOIN
+
+
+--34. Show employees and their managers using a self join.
+select e.employeenumber EmployeeNumber,concat(e.firstname,e.lastname) EmployeeName,m.employeenumber ManagerNumber,concat(m.firstname,m.lastname) ManagerName from employees e join employees m on e.employeenumber=m.reportsto; -- SELF JOIN
+
+
+--35. List all products and their order quantities (join products and orderdetails).
+select p.*,o.quantityordered from products p join orderdetails o on p.productcode=o.productcode;
+
+
+--36. Show customers who have not placed any orders (LEFT JOIN).
+select * from customers c left join orders o on c.customernumber=o.customernumber where o.ordernumber is null;
+
+
+--37. List all offices along with employees, including offices with no employees.
+select o.*,e.employeenumber,concat(e.firstname,e.lastname) Employeename  from offices o  left join employees e using(officecode);
+
+
+--38. Show each order's details including product name, quantity, and price.
+select o.*,p.productname,p.quantityinstock,p.buyprice from orderdetails o join products p using(productcode);
+
+
+--39. List all customers and the employees who manage their accounts.
+select c.customerNumber,c.customerName,e.employeeNumber,concat(e.firstName, ' ', e.lastName)  SalesRepName,e.jobTitle from customers c left join  employees e on c.salesRepEmployeeNumber = e.employeeNumber order by c.customerName;
+
+
+--40. Retrieve a list of offices with the city and names of employees working there.
+select o.*,e.EmployeeNumber,concat(e.firstname,e.lastname) EmployeeName from offices o join employees e using(officecode);
+
+
+-- 41. List orders that have not yet been shipped.
+select * from orders where status!='shipped';
+
+
+--42. Show all payments and the product lines the customers ordered.
+select p.customerNumber,p.paymentDate,p.amount,pr.productLine from payments p join orders o on p.customerNumber = o.customerNumber join
+orderdetails od on o.orderNumber = od.orderNumber join products pr on od.productCode = pr.productCode order by p.customerNumber, p.paymentDate, pr.productLine;
+
+
+--Subqueries
+--43. Find customers who have made the highest total payment.
+
+
+--44. List employees who work in the same office as 'Diane Murphy'.
+select employeenumber,concat(firstname,lastname) Employeename from employees where officecode=
+(select officecode from employees where concat(firstname,lastname)='DianeMurphy'); 
+
+
+--45. Show products that have never been ordered.
+select productcode,productname from products where productcode not in(select distinct ordernumber from orderdetails);
+
+
+--46. Get the names of customers whose payments are above the average payment amount.
+select customernumber,customername from customers where customernumber in 
+(select customernumber from payments where amount>(select avg(amount) from payments));
+
+
+--47. List product lines that have more than 5 products.
+select productLine from products group by productLine having count(productCode) > 5;
+
+
+--48. Show customers who have not made any payment.
+select customerNumber, customerName from customers where customerNumber not in (select distinct customerNumber from payments);
+
+
+--49. Find the employee(s) with the highest number of customers reporting to them.
+select employeeNumber, firstName, lastName from employees where employeeNumber in (
+select salesRepEmployeeNumber from customers group by salesRepEmployeeNumber having count(customerNumber) = (
+select max(custCount) from (select count(customerNumber) as custCount from customers
+group by salesRepEmployeeNumber) as counts));
+
+
+--50. List products with the highest price in each product line.
+select productLine, productName, buyPrice from products p where buyPrice = (select MAX(buyPrice) from products where productLine = p.productLine );
+
+
+--51. Show customers who ordered the same product more than once.
+select distinct c.customerNumber, c.customerName from customers c where c.customerNumber in (
+    select o.customerNumber from orders o join orderdetails od on o.orderNumber = od.orderNumber group by o.customerNumber, od.productCode
+    having COUNT(od.productCode) > 1);
+
+
+--Built-in Functions (MySQL)
+--52. Display the current date and time using a built-in function.
+select now();
+
+
+--53. Find the total number of customers using COUNT().
+select count(*) CustomersCount from employees;
+
+
+--54. Show the first 5 characters of each customer's name using SUBSTRING().
+select substring(firstname,1,5) FirstFiveChars from employees;
+
+
+--55. List orders placed in the last 30 days using NOW() and DATEDIFF().
+select * from orders where datediff(now(),orderdate)<=30;
+
+
+--56. Format the order date in 'dd-mm-yyyy' format using DATE_FORMAT().
+select date_format(orderdate,'%d-%m-%Y') FormatedDate from orders;
+
+
+--57. Display the length of each customer name.
+select customername,length(customername) Length from customers;
+
+
+--58. Convert all employee last names to lowercase.
+select firstname,lower(lastname) from employees;
+
+
+--59. Show total sales amount for each order using quantityOrdered * priceEach.
+select ordernumber,(quantityordered*priceeach) TotalAmount from orderdetails;
+
+
+--60. Extract year and month from payment dates
+select year(paymentdate) PaymentYear,monthname(paymentdate) PaymentMonth from payments;
