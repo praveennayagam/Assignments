@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+<Appenders>
+	<Console name="console" target="SYSTEM_OUT">
+	<PatternLayout pattern="%d{ISO8601} %-5p [%c{1}] %m%n" ></PatternLayout>
+	</Console>
+	
+	<File name="file" fileName="C:/Users/praveennayagam.c1/eclipse-workspace/Dec2MavenProject_filter_listners/src/main/resources/logs/app.logs" >
+	<PatternLayout pattern="%d{ISO8601} %-5p [%c{1}] %m%n" ></PatternLayout>
+	
+	</File>
+</Appenders>
+
+<Loggers>
+<Root level="info">
+<AppenderRef ref="console"></AppenderRef>
+<AppenderRef ref="file"></AppenderRef>
+</Root>
+
+</Loggers>
+</Configuration>
