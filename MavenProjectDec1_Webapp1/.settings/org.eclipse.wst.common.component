@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
         
-    <wb-module deploy-name="Dec2MavenProject_config_conntext">
+    <wb-module deploy-name="MavenProjectDec1_Webapp1">
                 
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
                 
@@ -10,9 +10,9 @@
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
                 
-        <property name="context-root" value="Dec2MavenProject_config_conntext"/>
+        <property name="context-root" value="MavenProjectDec1_Webapp1"/>
                 
-        <property name="java-output-path" value="/Dec2MavenProject_config_conntext/target/classes"/>
+        <property name="java-output-path" value="/MavenProjectDec1_Webapp1/target/classes"/>
             
     </wb-module>
     
