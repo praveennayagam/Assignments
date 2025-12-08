@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mphasis.model.Student" table="student_table">
+        
+        <!-- Primary key -->
+        <id name="studId" column="sid">
+            <generator class="increment"/>
+        </id>
+        
+        <!-- Other properties -->
+        <property name="studName" column="sname" type="string"/>
+        <property name="course" column="course" type="string"/>
+        <property name="mobile" column="phone" type="string"/>
+        <property name="email" column="email" type="string"/>
+        
+    </class>
+</hibernate-mapping>
