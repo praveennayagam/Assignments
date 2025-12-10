@@ -24,8 +24,13 @@ public class App {
 //    	Student s=new Student(128,"barath","java","5909625715","barath@gmal.com");
 //    	session.save(s);
 //   	tx.commit();
-//    	Student s=session.get(Student.class,1);
-//    	System.out.println(s);
+    	Student s=session.get(Student.class,2);
+    	System.out.println(s);
+    	Student s1=session.get(Student.class,2);
+    	if(s==s1)
+    		System.out.println("s1 reterived from session cache");
+    	else
+    		System.out.println("both ar diff obj");
     	
     	//get all students     
 //    	List<Student> studentList=session.createQuery("From Student",Student.class).list();
