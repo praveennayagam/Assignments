@@ -1,7 +1,17 @@
 package com.mphasis.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+@Entity
+@Table(name="user_table")
 public class User {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long uid;
 	private String uname;
 	private String pwd;
 	private String role;
@@ -20,6 +30,18 @@ public class User {
 		this.role = role;
 		this.email = email;
 		this.mobile = mobile;
+	}
+
+
+
+	public Long getUid() {
+		return uid;
+	}
+
+
+
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 
 

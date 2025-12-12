@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h1>${user.uid}</h1>
 <h1>${user.uname }</h1>
 <h1>${user.role}</h1>
 <h1>${user.mobile }</h1>

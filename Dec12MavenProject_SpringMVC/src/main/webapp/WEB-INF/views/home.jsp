@@ -17,6 +17,13 @@
 		<input type="submit" value="userInfo">
 
 	</form>
+	
+	
+	<form action="userList">
+		<input type="submit" value="userList">
+
+	</form>
+	
 
 	<script type="text/javascript">
     

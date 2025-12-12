@@ -21,11 +21,12 @@
       <input type="password" name="pwd" id="pwd">
       <br>
       
-       <select id="role">
-    	<option value="admin">Admin</option>
-    	<option value="user">User</option>
-    	<option value="manager">Manager</option>
-    </select>
+     <select id="role" name="role">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+    <option value="manager">Manager</option>
+</select>
+
 
       <input type="submit" value="login">
     </form>
