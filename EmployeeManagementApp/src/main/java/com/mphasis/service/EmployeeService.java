@@ -36,4 +36,16 @@ public class EmployeeService {
 		return repository.save(employee);
 		
 	}
+
+	public Employee findByEname(String name) {
+		
+	return repository.findByEname(name);
+	
+	}
+	
+	public List<Employee> findBySalary(double salary) {
+		
+		return repository.findBySalary(salary);
+
+	}
 }

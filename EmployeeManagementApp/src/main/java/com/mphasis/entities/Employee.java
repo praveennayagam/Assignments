@@ -5,7 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.NamedQuery;
+
 @Entity
+@NamedQuery(name="findByEmployeeName",query="select e from Employee e where e.ename=:name")
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

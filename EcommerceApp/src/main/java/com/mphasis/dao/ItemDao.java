@@ -40,4 +40,10 @@ public class ItemDao implements ItemDaoInterface{
 		repository.deleteById(id);
 	}
 
+	@Override
+	public List<Item> findItemByIds(List<Long> ids) {
+		
+		return repository.findAllById(ids);
+	}
+
 }

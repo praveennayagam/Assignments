@@ -46,4 +46,16 @@ public class EmployeeController {
 		return service.save(employee);
 		
 	}
+	
+	@GetMapping("/ename/{name}")
+	public Employee findByName(@PathVariable String name)
+	{
+		return service.findByEname(name);
+	}
+	
+	@GetMapping("/salary/{salary}")
+	public List<Employee> findBySalary(@PathVariable double salary) {
+	    return service.findBySalary(salary);
+	}
+
 }

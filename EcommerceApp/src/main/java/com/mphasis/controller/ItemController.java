@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mphasis.dto.ItemDto;
 import com.mphasis.entities.Item;
 import com.mphasis.service.ItemService;
 
@@ -46,9 +47,9 @@ public class ItemController {
 	}
 	
 	@PostMapping("/")
-	public Item save(@Valid  @RequestBody Item item)
+	public Item save(@Valid  @RequestBody ItemDto itemDto)
 	{
-		return service.save(item);
+		return service.save(itemDto);
 	}
 	
 	@PutMapping("/{id}")
