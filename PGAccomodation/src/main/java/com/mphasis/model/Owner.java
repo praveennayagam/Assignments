@@ -16,16 +16,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-//Example inside Owner
-
-
-
-
-
-
-
-
-
 @Entity
 @Table(name = "owners")
 public class Owner {

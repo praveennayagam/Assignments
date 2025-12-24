@@ -2,10 +2,12 @@ package com.mphasis.service;
 
 import java.util.List;
 
-import org.apache.coyote.BadRequestException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mphasis.exception.BadRequestException;
+import com.mphasis.exception.ForbiddenException;
+import com.mphasis.exception.NotFoundException;
 import com.mphasis.model.City;
 import com.mphasis.model.Locality;
 import com.mphasis.model.Owner;
@@ -17,10 +19,15 @@ import com.mphasis.repository.PgPlaceRepository;
 
 @Service
 public class PgPlaceServiceImpl implements PgPlaceService {
-	private final PgPlaceRepository pgRepo;
-	private final OwnerRepository ownerRepo;
-	private final CityRepository cityRepo;
-	private final LocalityRepository locRepo;
+	
+	@Autowired
+	 PgPlaceRepository pgRepo;
+	@Autowired
+	OwnerRepository ownerRepo;
+	@Autowired
+	CityRepository cityRepo;
+	@Autowired
+	LocalityRepository locRepo;
 
 	@Override
 	public List<PgPlace> getAvailableByCity(Long cityId) {

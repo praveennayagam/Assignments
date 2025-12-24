@@ -2,9 +2,11 @@ package com.mphasis.service;
 
 import java.util.List;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mphasis.exception.ForbiddenException;
+import com.mphasis.exception.NotFoundException;
 import com.mphasis.model.Owner;
 import com.mphasis.model.PgPlace;
 import com.mphasis.model.Tenant;
@@ -13,10 +15,13 @@ import com.mphasis.repository.PgPlaceRepository;
 import com.mphasis.repository.TenantRepository;
 
 @Service
-public class OwnerServiceImpl implements OwnerService {
-	private final OwnerRepository ownerRepo;
-	private final TenantRepository tenantRepo;
-	private final PgPlaceRepository pgRepo;
+public class OwnerServiceImpl implements OwnerService  {
+	@Autowired
+	OwnerRepository ownerRepo;
+	@Autowired
+	TenantRepository tenantRepo;
+	@Autowired
+	PgPlaceRepository pgRepo;
 
 	@Override
 	public List<PgPlace> getOwnerPlaces(Long ownerId) {
@@ -38,15 +43,5 @@ public class OwnerServiceImpl implements OwnerService {
 		return tenantRepo.save(tenant);
 	}
 
-	@Override
-	public Owner registerOwner(Owner owner) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Tenant registerTenant(Tenant tenant) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
