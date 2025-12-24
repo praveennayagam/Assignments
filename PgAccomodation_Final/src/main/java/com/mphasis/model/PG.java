@@ -20,7 +20,7 @@ public class PG {
     private int popularityCount;
     private String locality;
 
-    // City stored as simple fields (no separate City entity)
+  
     private String city;
     private Long cityId;
 
